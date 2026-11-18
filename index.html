@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MyTeacherQuiz LIVE · Leaderboard</title>
+<meta name="description" content="Who is winning the MyTeacherQuiz LIVE quiz on YouTube? Weekly crowns, monthly trophies and the top players.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;1000&display=swap');
+:root{--bg:#1f1435;--panel:#35224d;--card:#4b326a;--line:#d6ad58;--accent:#ffda65;--ink:#fff7ed;--muted:#d9c6ec;--red:#b62845}
+*{box-sizing:border-box}
+html{background:#1f1435}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:Nunito,system-ui,sans-serif;background:radial-gradient(ellipse at 30% 0%,#583880,#271940 50%,#1f1435 80%) fixed;padding:0 max(16px,env(safe-area-inset-left)) 40px}
+main{max-width:900px;margin:0 auto}
+header{text-align:center;padding:34px 0 10px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:1000;font-size:20px}
+.brand b{background:var(--accent);color:#372427;border-radius:99px;padding:6px 12px}
+h1{margin:16px 0 6px;font-size:clamp(34px,7vw,58px);font-weight:1000;line-height:1.05;background:var(--red);border:2px solid var(--line);border-radius:28px;padding:10px 24px;display:inline-block;box-shadow:0 7px 0 #150c2560}
+.sub{color:var(--muted);font-size:17px;margin:12px 0 0}
+.live{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 18px;border-radius:99px;background:#0d0a16aa;font-weight:800}
+.live i{width:10px;height:10px;border-radius:50%;background:#ed4564}
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:26px 0 8px}
+.tabs button{font:inherit;font-weight:1000;font-size:16px;color:var(--ink);background:var(--panel);border:2px solid var(--line);border-radius:99px;padding:10px 18px;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--accent);color:#372427}
+.period{text-align:center;color:var(--muted);font-weight:800;margin:8px 0 0}
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:12px;margin:34px 0 18px}
+.step{flex:1;max-width:230px;display:flex;flex-direction:column;align-items:center;min-width:0}
+.av{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-weight:1000;font-size:28px;background:var(--card);border:5px solid #fff}
+.p1 .av{width:92px;height:92px;border-color:#f4c542}.p2 .av{border-color:#c9d3de}.p3 .av{border-color:#d08a4f}
+.step strong{margin-top:8px;font-size:19px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.step span{color:var(--muted);font-weight:800;margin-bottom:8px}
+.block{width:100%;display:grid;place-items:center;border-radius:20px 20px 8px 8px;font-size:52px;font-weight:1000;color:#fff;text-shadow:0 4px 0 #0003}
+.p1 .block{height:140px;background:linear-gradient(#ffd760,#e9a623)}.p2 .block{height:105px;background:linear-gradient(#e6edf4,#9fb0c2)}.p3 .block{height:80px;background:linear-gradient(#f0b07a,#b9692f)}
+.crownmark{font-size:34px;line-height:1;margin-bottom:4px}
+ol{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+li{display:flex;align-items:center;gap:12px;background:var(--panel);border:2px solid #d6ad5866;border-radius:18px;padding:10px 16px;font-weight:800}
+li .n{width:30px;color:var(--muted)}
+li .name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:18px}
+li .pts{font-weight:1000;font-size:18px}
+.awards{display:flex;gap:6px;font-size:15px;white-space:nowrap}
+.empty{text-align:center;color:var(--muted);font-size:19px;padding:40px 0}
+.rules{margin-top:34px;background:#0d0a1688;border-radius:22px;padding:18px 22px;line-height:1.55;color:var(--muted)}
+.rules b{color:var(--ink)}
+footer{text-align:center;color:var(--muted);font-size:14px;margin-top:26px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="brand"><b>MQ</b> MyTeacherQuiz LIVE</div><br>
+  <h1>Leaderboard</h1>
+  <p class="sub">Play in the YouTube chat, climb the ranking, win crowns.</p>
+  <div class="live"><i></i><span id="updated">Loading…</span></div>
+</header>
+<div class="tabs" role="group" aria-label="Ranking period">
+  <button data-tab="week" aria-pressed="true">This week</button>
+  <button data-tab="month" aria-pressed="false">This month</button>
+  <button data-tab="day" aria-pressed="false">Today</button>
+  <button data-tab="crowns" aria-pressed="false">👑 Crown champions</button>
+</div>
+<p class="period" id="period"></p>
+<section class="podium" id="podium"></section>
+<ol id="list"></ol>
+<div class="rules">
+  <b>How it works:</b> answer fast in the live chat to score points (harder levels give more).<br>
+  👑 <b>Weekly winner</b> = 1 crown · 🏆 <b>Monthly top 3</b> = a trophy · 🏅 <b>Daily top 3</b> = a medal.<br>
+  Weeks and days follow UTC time. This page updates while the LIVE is on.
+</div>
+<footer>If you see we're LIVE on YouTube, come play with us!</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let data=null, tab='week';
+const LABEL={week:'Points this week',month:'Points this month',day:'Points today',crowns:'Weekly crowns won this year'};
+function initials(n){return (n||'?').trim().slice(0,1).toUpperCase()}
+function awards(p){const a=[];if(p.crowns)a.push('👑'+p.crowns);if(p.trophies)a.push('🏆'+p.trophies);if(p.medals)a.push('🏅'+p.medals);return a.join(' ')}
+function render(){
+  if(!data)return;
+  const rows=(data[tab]||[]);
+  $('period').textContent=LABEL[tab];
+  const pod=$('podium'); pod.replaceChildren(); $('list').replaceChildren();
+  if(!rows.length){pod.innerHTML='';const e=document.createElement('p');e.className='empty';e.textContent='Nobody yet. Be the first!';pod.append(e);return;}
+  for(const i of [1,0,2]){const p=rows[i];if(!p)continue;
+    const s=document.createElement('div');s.className='step p'+(i+1);
+    if(i===0){const c=document.createElement('div');c.className='crownmark';c.textContent='👑';s.append(c)}
+    const av=document.createElement('div');av.className='av';av.textContent=initials(p.name);
+    const nm=document.createElement('strong');nm.textContent=p.name;
+    const pt=document.createElement('span');pt.textContent=tab==='crowns'?p.points+' 👑':p.points.toLocaleString('en-US')+' pts';
+    const b=document.createElement('div');b.className='block';b.textContent=i+1;
+    s.append(av,nm,pt,b);pod.append(s)}
+  rows.slice(3).forEach((p,k)=>{const li=document.createElement('li');
+    for(const [c,t] of [['n',String(k+4)],['name',p.name],['awards',awards(p)],['pts',tab==='crowns'?p.points+' 👑':p.points.toLocaleString('en-US')]]){const s=document.createElement('span');s.className=c;s.textContent=t;li.append(s)}
+    $('list').append(li)});
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-pressed',x===b));render()});
+fetch('data.json?'+Date.now()).then(r=>r.json()).then(d=>{data=d;
+  const when=new Date(d.updated*1000);$('updated').textContent='Updated '+when.toLocaleString('en-US',{dateStyle:'medium',timeStyle:'short'});render()})
+ .catch(()=>{$('updated').textContent='No data yet';});
+</script>
+</body>
+</html>

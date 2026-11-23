@@ -1,33 +1,18 @@
 {
- "updated": 1795391400,
+ "updated": 1795392304,
  "periods": {
-  "day": "2026-11-22",
-  "week": "2026-W47",
+  "day": "2026-11-23",
+  "week": "2026-W48",
   "month": "2026-11",
   "year": "2026"
  },
  "day": [],
- "week": [
-  {
-   "name": "@batatakick",
-   "points": 122.0,
-   "crowns": 0,
-   "trophies": 0,
-   "medals": 1
-  },
-  {
-   "name": "@MyTeacherQuiz",
-   "points": 49.5,
-   "crowns": 0,
-   "trophies": 0,
-   "medals": 1
-  }
- ],
+ "week": [],
  "month": [
   {
    "name": "@batatakick",
    "points": 122.0,
-   "crowns": 0,
+   "crowns": 1,
    "trophies": 0,
    "medals": 1
   },
@@ -39,5 +24,13 @@
    "medals": 1
   }
  ],
- "crowns": []
+ "crowns": [
+  {
+   "name": "@batatakick",
+   "points": 1,
+   "crowns": 1,
+   "trophies": 0,
+   "medals": 1
+  }
+ ]
 }
